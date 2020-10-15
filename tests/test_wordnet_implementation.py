@@ -4,7 +4,7 @@ def test_return_whole_synset_list_from_word():
     word = "computer"
     # Testing here just that the synset names are right, if they are the correct synsets are returned
     test_computer_synsets = ["computer.n.01", "calculator.n.01"]
-    computer_synsets = wni.retrieve_synset_list_for_word(word, whole_synset=True)
+    computer_synsets = wni.retrieve_synset_list_for_word(word, whole_synset=True, pos_tag=None)
     computer_synset_name_list = [name.name() for name in computer_synsets]
     assert test_computer_synsets == computer_synset_name_list
 
@@ -12,12 +12,12 @@ def test_return_whole_synset_list_from_word():
 def test_return_name_synset_list_from_word():
     word = "computer"
     test_computer_synsets = ["computer.n.01", "calculator.n.01"]
-    computer_synsets = wni.retrieve_synset_list_for_word(word, whole_synset=False)
+    computer_synsets = wni.retrieve_synset_list_for_word(word, whole_synset=False, pos_tag=None)
     assert test_computer_synsets == computer_synsets
 
 
 def test_return_hyponym_list_for_synset():
-    computer_synset = wni.retrieve_synset_list_for_word("computer")
+    computer_synset = wni.retrieve_synset_list_for_word("computer", whole_synset=True, pos_tag=None)
     computer_synset_1 = computer_synset[0]
     computer_hyponyms = wni.retrieve_hyponym_or_hypernym_list_for_synset(computer_synset_1,
                                                                          whole_synset=False,

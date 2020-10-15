@@ -1,13 +1,14 @@
-from nltk.corpus import wordnet as wn
+from textblob import Word
 
-
-def retrieve_synset_list_for_word(word, whole_synset=True):
+def retrieve_synset_list_for_word(word, whole_synset=True, pos_tag=None):
     """Returns the synset list for a word. Possibility to return whole synsets or just names
-    of synsets."""
+    of synsets. Also possible to limit to specific POS tags"""
+    blob_word = Word(word)
+
     if whole_synset:
-        return wn.synsets(word)
+        return blob_word.get_synsets(pos_tag)
     else:
-        return [name.name() for name in wn.synsets(word)]
+        return [name.name() for name in blob_word.get_synsets(pos_tag)]
 
 
 def retrieve_hyponym_or_hypernym_list_for_synset(synset, whole_synset=True, hypo_or_hyper=0):
