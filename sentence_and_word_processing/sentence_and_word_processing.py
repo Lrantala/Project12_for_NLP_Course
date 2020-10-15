@@ -1,11 +1,11 @@
-from nltk.tokenize import word_tokenize
 from nltk.stem.snowball import SnowballStemmer
 from nltk.corpus import stopwords as nltk_stopwords
+from textblob import TextBlob
+
 
 def preprocess(sentence, use_stemmer=False, use_lowercase=False, use_stopwords = False, remove_nonalpha=False):
     # We always tokenize
-    words = word_tokenize(sentence)
-
+    words = TextBlob(sentence).words
 
     if use_stopwords:
         stopwords = list(set(nltk_stopwords.words('english')))
@@ -28,3 +28,4 @@ def preprocess(sentence, use_stemmer=False, use_lowercase=False, use_stopwords =
         stemmer = SnowballStemmer("english")
         words = [stemmer.stem(word) for word in words]
     return words
+
