@@ -1,4 +1,5 @@
 from textblob import Word
+import nltk.corpus
 from sentence_and_word_processing.sentence_and_word_processing import preprocess
 
 def retrieve_synset_list_for_word(word, whole_synset=True, pos_tag=None):
@@ -56,9 +57,9 @@ def calculate_path_similarity_for_sentences(sentence1, sentence2, stemming, lowe
 
     for word1 in sentence1_words:
         max_score = 0
-        word1_synsets = retrieve_synset_list_for_word(word1)
+        word1_synsets = retrieve_synset_list_for_word(word1[0])
         for word2 in sentence2_words:
-            word2_synsets = retrieve_synset_list_for_word(word2)
+            word2_synsets = retrieve_synset_list_for_word(word2[0])
             score = calculate_path_similarity_for_synset_lists(word1_synsets, word2_synsets)
             if score > max_score:
                 max_score = score
@@ -66,21 +67,16 @@ def calculate_path_similarity_for_sentences(sentence1, sentence2, stemming, lowe
 
     for word2 in sentence2_words:
         max_score = 0
-        word2_synsets = retrieve_synset_list_for_word(word2)
+        word2_synsets = retrieve_synset_list_for_word(word2[0])
         for word1 in sentence1_words:
-            word1_synsets = retrieve_synset_list_for_word(word1)
+            word1_synsets = retrieve_synset_list_for_word(word1[0])
             score = calculate_path_similarity_for_synset_lists(word2_synsets, word1_synsets)
             if score > max_score:
                 max_score = score
         sentence2_score += max_score
 
-    print("sentence1 score sum: " + str(sentence1_score))
+    # Count the means for each sentence, add them together and divide by number of sentences
     sentence1_score_mean = sentence1_score / len(sentence1_words)
-    print("sentence1 score mean: " + str(sentence1_score_mean))
-
-    print("sentence2 score sum: " + str(sentence2_score))
     sentence2_score_mean = sentence2_score / len(sentence2_words)
-    print("sentence2 score mean: " + str(sentence2_score_mean))
-
     sentence_similarity_score = (sentence1_score_mean + sentence2_score_mean) / 2
     print("Sentence similarities: " + str(sentence_similarity_score))
