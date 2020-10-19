@@ -1,10 +1,11 @@
 import argparse
 import logging
 import wordnet_implementation.wordnet_implementation as wni
+import similarity_functions.pearson_correlation_stss131 as pcorr
 from gooey import Gooey
 
 
-#@Gooey()
+#Gooey()
 def argument_parser():
     parser = argparse.ArgumentParser(description="Parser to read arguments from the command line.")
     parser.add_argument("-s1", "--sentence1", help="First sentence to be processed/analyzed")
@@ -16,6 +17,8 @@ def argument_parser():
     parser.add_argument("-v", "--verbose", action="store_true", help="Whether to display logging information.")
     parser.add_argument("-na", "--nonalpha", action="store_true", help="Whether to remove non-alpha characters.")
     parser.add_argument("-st", "--stopwords", action="store_true", help="Whether to use stopwords.")
+    parser.add_argument("-stest", "--stss131test", action="store_true", help="Whether to run Pearson correlation to"
+                                                                           "STSS-131 dataset with these processing settings.")
     return parser
 
 
@@ -30,7 +33,11 @@ if __name__ == "__main__":
         logging.basicConfig(level=logging.INFO)
 
     logging.info("Calculating path similarity for sentences.")
-    wni.calculate_path_similarity_for_sentences(sentence1=args.sentence1, sentence2=args.sentence2,
+    sentence_similarity_score = wni.calculate_path_similarity_for_sentences(sentence1=args.sentence1, sentence2=args.sentence2,
                                                 stemming=args.stem, lowercase=args.lowercase,
                                                 stopwords=args.stopwords, remove_notalpha=args.nonalpha)
+    print("Sentence similarities: " + str(sentence_similarity_score))
 
+    if args.stss131test:
+        pcorr.calculate_pearson_for_sts131(stemming=args.stem, lowercase=args.lowercase,
+                                           stopwords=args.stopwords, remove_notalpha=args.nonalpha)

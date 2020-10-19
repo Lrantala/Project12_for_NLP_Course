@@ -79,4 +79,4 @@ def calculate_path_similarity_for_sentences(sentence1, sentence2, stemming, lowe
     sentence1_score_mean = sentence1_score / len(sentence1_words)
     sentence2_score_mean = sentence2_score / len(sentence2_words)
     sentence_similarity_score = (sentence1_score_mean + sentence2_score_mean) / 2
-    print("Sentence similarities: " + str(sentence_similarity_score))
+    return round(sentence_similarity_score, 2)

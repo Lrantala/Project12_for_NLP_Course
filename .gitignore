@@ -79,6 +79,7 @@ History
 # *.iml
 # *.ipr
 *.csv#
+*.pyc
 
 # CMake
 cmake-build-*/
