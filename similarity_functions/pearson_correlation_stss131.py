@@ -15,7 +15,6 @@ def calculate_pearson_for_sts131(stemming, lowercase, stopwords,
         list_of_similarity_values.append(similarity_score)
 
     stss131_df["R"] = pd.Series(list_of_similarity_values)
-    print("yay")
     pearson_corr = pearsonr(stss131_df.X, stss131_df.R)
     print("Pearson correlation between Rater mean: {corr}, p-value {pval}".format(corr=pearson_corr[0],
                                                                                   pval=pearson_corr[1]))
