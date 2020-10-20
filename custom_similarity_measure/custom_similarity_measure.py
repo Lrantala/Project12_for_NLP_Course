@@ -39,6 +39,21 @@ def custom_similarity_measure(synset1, synset2):
 
     return noun_hyper, verb_hypo # to be returned to the function that makes the call for the custom similarity measure
 
+def commonality(synset1, synset2):
+    count = 0
+    for item1 in synset1:
+        for item2 in synset2:
+               if item1 == item2 and item1==item2 != []:
+                   count += 1
+    return count
+
+def hyp_union(hyp_list):
+    count = 0
+    for item in hyp_list:
+        if item:
+            count += 1
+    return count
+
 ## The following block of code should be in the module where the call is made to the custom similarity measure
     all_noun_hyper.append(noun_hyper)
     all_verb_hypo.append(verb_hypo)
@@ -47,18 +62,4 @@ def custom_similarity_measure(synset1, synset2):
 
 ## the block of code ends here
 
-    def commonality(synset1, synset2):
-        count = 0
-        for item1 in synset1:
-            for item2 in synset2:
-                if item1 == item2 and item1==item2!=[]:
-                    count += 1
-        return count
 
-    def hyp_union(hyp_list):
-        count = 0
-
-        for item in hyp_list:
-            if item:
-                count += 1
-        return count
