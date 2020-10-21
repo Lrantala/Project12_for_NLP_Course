@@ -6,7 +6,7 @@ import custom_similarity_measure.custom_similarity_measure as csm
 from gooey import Gooey
 
 
-#@Gooey()
+@Gooey()
 def argument_parser():
     parser = argparse.ArgumentParser(description="Parser to read arguments from the command line.")
     parser.add_argument("-s1", "--sentence1", help="First sentence to be processed/analyzed")
@@ -56,4 +56,5 @@ if __name__ == "__main__":
 
     if args.stss131test:
         pcorr.calculate_pearson_for_sts131(stemming=args.stem, lowercase=args.lowercase,
-                                           stopwords=args.stopwords, remove_notalpha=args.nonalpha)
+                                           stopwords=args.stopwords, remove_notalpha=args.nonalpha,
+                                           analyze_measure=args.measure)
