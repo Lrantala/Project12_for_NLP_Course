@@ -58,7 +58,7 @@ def commonality(synset1, synset2):
 def hyp_union(hyp_list):
     union_list = []
     for item in hyp_list:
-        if item not in union_list:
+        if item not in union_list and item != []:
             union_list.append(item)
     return len(union_list)
 
