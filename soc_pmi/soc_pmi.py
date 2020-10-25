@@ -98,6 +98,3 @@ def soc_pmi(s1, s2):
     except:
         print("Exception encountered: Float division by zero.")
 
-    # similarity = ((Delta + sum(Pi)) * (len(S1_next) + len(S2_next))) / (2 * len(S1_next) * len(S2_next))
-    # print("Similarity Score", similarity)
-    # return similarity
