@@ -42,19 +42,26 @@ if __name__ == "__main__":
     if args.verbose:
         logging.basicConfig(level=logging.INFO)
 
-    if args.measure == "original":
-        logging.info("Calculating path similarity for sentences using original formula.")
-        sentence_similarity_score = wni.calculate_path_similarity_for_sentences(sentence1=args.sentence1, sentence2=args.sentence2,
-                                                stemming=args.stem, lowercase=args.lowercase,
-                                                stopwords=args.stopwords, remove_notalpha=args.nonalpha)
-    elif args.measure == "hypers_and_hypos":
-        logging.info("Calculating path similarity for sentences using hypernyms and hyponyms.")
-        sentence_similarity_score = csm.count_custom_similarity_measure(sentence1=args.sentence1, sentence2=args.sentence2,
-                                                stemming=args.stem, lowercase=args.lowercase,
-                                                stopwords=args.stopwords, remove_notalpha=args.nonalpha)
-    print("Sentence similarities: " + str(sentence_similarity_score))
-
     if args.stss131test:
         pcorr.calculate_pearson_for_sts131(stemming=args.stem, lowercase=args.lowercase,
                                            stopwords=args.stopwords, remove_notalpha=args.nonalpha,
                                            analyze_measure=args.measure)
+
+    elif args.measure == "original":
+        logging.info("Calculating path similarity for sentences using original formula.")
+        sentence_similarity_score = wni.calculate_path_similarity_for_sentences(sentence1=args.sentence1,
+                                                                                sentence2=args.sentence2,
+                                                                                stemming=args.stem,
+                                                                                lowercase=args.lowercase,
+                                                                                stopwords=args.stopwords,
+                                                                                remove_notalpha=args.nonalpha)
+        print("Sentence similarities: " + str(sentence_similarity_score))
+    elif args.measure == "hypers_and_hypos":
+        logging.info("Calculating path similarity for sentences using hypernyms and hyponyms.")
+        sentence_similarity_score = csm.count_custom_similarity_measure(sentence1=args.sentence1,
+                                                                        sentence2=args.sentence2,
+                                                                        stemming=args.stem, lowercase=args.lowercase,
+                                                                        stopwords=args.stopwords,
+                                                                        remove_notalpha=args.nonalpha)
+        print("Sentence similarities: " + str(sentence_similarity_score))
+
