@@ -3,6 +3,7 @@ import logging
 import wordnet_implementation.wordnet_implementation as wni
 import similarity_functions.pearson_correlation_stss131 as pcorr
 import custom_similarity_measure.custom_similarity_measure as csm
+import soc_pmi.soc_pmi as soc
 from gooey import Gooey
 
 
@@ -17,7 +18,7 @@ def argument_parser():
                         type=str.lower,
                         const="original",
                         nargs="?",
-                        choices=("original", "hypers_and_hypos", "alternative"),
+                        choices=("original", "hypers_and_hypos", "soc_pmi"),
                         help="Select similarity measure to use (default: 'original')")
 
     parser.add_argument("-l", "--lowercase", action="store_true", help="Whether the sentences should be lowercased.")
@@ -63,5 +64,9 @@ if __name__ == "__main__":
                                                                         stemming=args.stem, lowercase=args.lowercase,
                                                                         stopwords=args.stopwords,
                                                                         remove_notalpha=args.nonalpha)
+        print("Sentence similarities: " + str(sentence_similarity_score))
+    elif args.measure == "soc_pmi":
+        logging.info("Calculating path similarity for sentences using SOC PMI Alogrithm.")
+        sentence_similarity_score = soc.soc_pmi(args.sentence1, args.sentence2)
         print("Sentence similarities: " + str(sentence_similarity_score))
 

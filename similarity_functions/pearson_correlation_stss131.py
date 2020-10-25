@@ -1,5 +1,6 @@
 import wordnet_implementation.wordnet_implementation as wni
 import custom_similarity_measure.custom_similarity_measure as csm
+import soc_pmi.soc_pmi as soc
 from scipy.stats import pearsonr
 import pandas as pd
 
@@ -13,11 +14,19 @@ def calculate_pearson_for_sts131(stemming, lowercase, stopwords, remove_notalpha
             similarity_score = wni.calculate_path_similarity_for_sentences(sentence1=s1, sentence2=s2,
                                                         stemming=stemming, lowercase=lowercase,
                                                         stopwords=stopwords, remove_notalpha=remove_notalpha)
+            print("Similarity score of the current sentence pair is:", similarity_score)
+
         elif analyze_measure == "hypers_and_hypos":
             similarity_score = csm.count_custom_similarity_measure(sentence1=s1, sentence2=s2,
                                                                    stemming=stemming, lowercase=lowercase,
                                                                    stopwords=stopwords,
                                                                    remove_notalpha=remove_notalpha)
+            print("Similarity score of the current sentence pair is:", similarity_score)
+
+        elif analyze_measure == "soc_pmi":
+            similarity_score = soc.soc_pmi(s1, s2)
+            print("Similarity score of the current sentence pair is:", similarity_score)
+
         list_of_similarity_values.append(similarity_score)
 
     stss131_df["R"] = pd.Series(list_of_similarity_values)
