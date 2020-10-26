@@ -3,6 +3,7 @@ import logging
 import wordnet_implementation.wordnet_implementation as wni
 import similarity_functions.pearson_correlation_stss131 as pcorr
 import custom_similarity_measure.custom_similarity_measure as csm
+from sentence_and_word_processing.sentence_and_word_processing import preprocess
 import soc_pmi.soc_pmi as soc
 from gooey import Gooey
 
@@ -67,6 +68,20 @@ if __name__ == "__main__":
         print("Sentence similarities: " + str(sentence_similarity_score))
     elif args.measure == "soc_pmi":
         logging.info("Calculating path similarity for sentences using SOC PMI Alogrithm.")
-        sentence_similarity_score = soc.soc_pmi(args.sentence1, args.sentence2)
+        sentence1_words = preprocess(sentence=args.sentence1, use_stemmer=args.stem, use_lowercase=args.lowercase,
+                                     use_stopwords=args.stopwords, remove_nonalpha=args.nonalpha)
+
+        sentence2_words = preprocess(sentence=args.sentence2, use_stemmer=args.stem, use_lowercase=args.lowercase,
+                                     use_stopwords=args.stopwords, remove_nonalpha=args.nonalpha)
+
+        s1_word_list, s2_word_list = [], []
+
+        for word1 in sentence1_words:
+            s1_word_list.append(word1[0])
+
+        for word2 in sentence2_words:
+            s2_word_list.append(word2[0])
+
+        sentence_similarity_score = soc.soc_pmi(s1_word_list, s2_word_list)
         print("Sentence similarities: " + str(sentence_similarity_score))
 

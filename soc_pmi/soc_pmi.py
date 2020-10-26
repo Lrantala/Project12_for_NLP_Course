@@ -12,28 +12,28 @@ import wordSim
 def soc_pmi(s1, s2):
 
 
-    tokenizer = RegexpTokenizer(r'\w+')
-    S1 = tokenizer.tokenize(s1)
-    S2 = tokenizer.tokenize(s2)
+    #tokenizer = RegexpTokenizer(r'\w+')
+    #S1 = tokenizer.tokenize(s1)
+    #S2 = tokenizer.tokenize(s2)
 
-    ltz = WordNetLemmatizer()
-    S1 = [ltz.lemmatize(word.lower()) for word in s1]
-    S2 = [ltz.lemmatize(word.lower()) for word in s2]
+    #ltz = WordNetLemmatizer()
+    #S1 = [ltz.lemmatize(word.lower()) for word in s1]
+    #S2 = [ltz.lemmatize(word.lower()) for word in s2]
 
     '''
     tokenizer = RegexpTokenizer(r'\w+')
     S1 = tokenizer.tokenize(S1)
     S2 = tokenizer.tokenize(S2)
     '''
-    S1_filtered = [word for word in S1 if word not in stopwords.words('english')]
-    S2_filtered = [word for word in S2 if word not in stopwords.words('english')]
+    #S1_filtered = [word for word in S1 if word not in stopwords.words('english')]
+    #S2_filtered = [word for word in S2 if word not in stopwords.words('english')]
 
 
     # Start of Step 2
-    score, common = wordSim.wordSim(S1_filtered, S2_filtered)
+    score, common = wordSim.wordSim(s1, s2)
 
-    S1_next = [word for word in S1_filtered if word not in common]
-    S2_next = [word for word in S2_filtered if word not in common]
+    S1_next = [word for word in s1 if word not in common]
+    S2_next = [word for word in s2 if word not in common]
 
     h, w = len(S1_next), len(S2_next)
 

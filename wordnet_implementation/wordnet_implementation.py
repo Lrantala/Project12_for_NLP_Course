@@ -52,6 +52,7 @@ def calculate_path_similarity_for_sentences(sentence1, sentence2, stemming, lowe
                                  use_stopwords=stopwords, remove_nonalpha=remove_notalpha)
     sentence2_words = preprocess(sentence=sentence2, use_stemmer=stemming, use_lowercase=lowercase,
                                  use_stopwords=stopwords, remove_nonalpha=remove_notalpha)
+
     sentence1_score = 0
     sentence2_score = 0
 
