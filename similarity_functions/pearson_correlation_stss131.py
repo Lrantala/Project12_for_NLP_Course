@@ -17,14 +17,14 @@ def calculate_pearson_for_sts131(stemming, lowercase, stopwords, remove_notalpha
                                                         stopwords=stopwords, remove_notalpha=remove_notalpha)
             print("Similarity score of the current sentence pair is:", similarity_score)
 
-        elif analyze_measure == "hypers_and_hypos":
+        elif analyze_measure == "hyp-ed method":
             similarity_score = csm.count_custom_similarity_measure(sentence1=s1, sentence2=s2,
                                                                    stemming=stemming, lowercase=lowercase,
                                                                    stopwords=stopwords,
                                                                    remove_notalpha=remove_notalpha)
             print("Similarity score of the current sentence pair is:", similarity_score)
 
-        elif analyze_measure == "soc_pmi":
+        elif analyze_measure == "semantic text similarity method":
             sentence1_words = preprocess(s1, stemming, lowercase, stopwords, remove_notalpha)
 
             sentence2_words = preprocess(s2, stemming, lowercase, stopwords, remove_notalpha)

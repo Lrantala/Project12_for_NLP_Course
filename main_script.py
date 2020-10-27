@@ -19,7 +19,7 @@ def argument_parser():
                         type=str.lower,
                         const="original",
                         nargs="?",
-                        choices=("original", "hypers_and_hypos", "soc_pmi"),
+                        choices=("original", "hyp-ed method", "semantic text similarity method"),
                         help="Select similarity measure to use (default: 'original')")
 
     parser.add_argument("-l", "--lowercase", action="store_true", help="Whether the sentences should be lowercased.")
@@ -58,7 +58,7 @@ if __name__ == "__main__":
                                                                                 stopwords=args.stopwords,
                                                                                 remove_notalpha=args.nonalpha)
         print("Sentence similarities: " + str(sentence_similarity_score))
-    elif args.measure == "hypers_and_hypos":
+    elif args.measure == "hyp-ed method":
         logging.info("Calculating path similarity for sentences using hypernyms and hyponyms.")
         sentence_similarity_score = csm.count_custom_similarity_measure(sentence1=args.sentence1,
                                                                         sentence2=args.sentence2,
@@ -66,7 +66,7 @@ if __name__ == "__main__":
                                                                         stopwords=args.stopwords,
                                                                         remove_notalpha=args.nonalpha)
         print("Sentence similarities: " + str(sentence_similarity_score))
-    elif args.measure == "soc_pmi":
+    elif args.measure == "semantic text similarity method":
         logging.info("Calculating path similarity for sentences using SOC PMI Alogrithm.")
         sentence1_words = preprocess(sentence=args.sentence1, use_stemmer=args.stem, use_lowercase=args.lowercase,
                                      use_stopwords=args.stopwords, remove_nonalpha=args.nonalpha)

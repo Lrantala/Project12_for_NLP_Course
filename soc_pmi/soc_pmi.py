@@ -92,9 +92,10 @@ def soc_pmi(s1, s2):
     #Begining of Step 6
     Delta = 2.0
 
-    try:
+    if len(Pi) == 0:
+        similarity = 1.8
+        print("Forced similarity score is", similarity)
+    else:
         similarity = ((Delta + sum(Pi)) * (len(S1_next) + len(S2_next))) / (2 * len(S1_next) * len(S2_next))
-        return similarity
-    except:
-        print("Exception encountered: Float division by zero.")
-
+        print("Similarity Score", similarity)
+    return similarity
