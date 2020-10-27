@@ -93,7 +93,7 @@ def soc_pmi(s1, s2):
     Delta = 2.0
 
     if len(Pi) == 0:
-        similarity = 1.8
+        similarity = 0.9999
         print("Forced similarity score is", similarity)
     else:
         similarity = ((Delta + sum(Pi)) * (len(S1_next) + len(S2_next))) / (2 * len(S1_next) * len(S2_next))
