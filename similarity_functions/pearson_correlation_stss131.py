@@ -24,3 +24,7 @@ def calculate_pearson_for_sts131(stemming, lowercase, stopwords, remove_notalpha
     pearson_corr = pearsonr(stss131_df.X, stss131_df.R)
     print("Pearson correlation between Rater mean: {corr}, p-value {pval}".format(corr=pearson_corr[0],
                                                                                   pval=pearson_corr[1]))
+
+    # This is just to enable the printing of the normalized value and the df in Latex-format for the report
+    # stss131_df["XNorm"] = stss131_df.X / 4
+    # print(stss131_df.to_latex(index=False))
