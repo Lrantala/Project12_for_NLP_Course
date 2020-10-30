@@ -80,10 +80,13 @@ History
 # *.ipr
 *.csv#
 *.pyc
-*.idea/misc.xml
-*.idea/modules.xml
-*.idea/vcs.xml
-*.idea/*.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/*.iml
+results/
+
+
 # CMake
 cmake-build-*/
 

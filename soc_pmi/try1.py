@@ -2,7 +2,8 @@ import os
 try:
 	os.remove("try1.pyc")
 except:
-	print("Duplicate Module doesn't exist")
+	# print("Duplicate Module try1.pyc doesn't exist")
+	pass
 	
 def display(array, len1, len2, string1, string2):
 	print(list(string2))
@@ -22,9 +23,6 @@ def dynammicProg(string1="Pritish", string2="Yuvraj"):
 				array[i][j] = array[i-1][j-1] + 1
 			else:
 				array[i][j] = max(array[i-1][j], array[i][j-1])
-	#print array
-	#print "Printing"
-	#display(array, len1, len2, string1, string2)
 	return array[i][j]
 
 def starting(string1="Pritish", string2="Pritieish"):

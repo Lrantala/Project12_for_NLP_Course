@@ -2,11 +2,12 @@ from joblib.numpy_pickle_utils import xrange
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import RegexpTokenizer
+import logging
 
-import try1
+import soc_pmi.try1 as try1
 # import word as wd
-import wn3
-import wordSim
+import soc_pmi.wn3 as wn3
+import soc_pmi.wordSim as wordSim
 
 
 def soc_pmi(s1, s2):
@@ -86,7 +87,7 @@ def soc_pmi(s1, s2):
         Matrix = delete(Matrix, maxi, maxj)
 
         for i in range(len(Matrix)):
-            print(Matrix[i])
+            logging.info(Matrix[i])
     # End of Step 5
 
     #Begining of Step 6
@@ -94,8 +95,8 @@ def soc_pmi(s1, s2):
 
     if len(Pi) == 0:
         similarity = 0.9999
-        print("Forced similarity score is", similarity)
+        # print("Forced similarity score is", similarity)
     else:
         similarity = ((Delta + sum(Pi)) * (len(S1_next) + len(S2_next))) / (2 * len(S1_next) * len(S2_next))
-        print("Similarity Score", similarity)
+        # print("Similarity Score", similarity)
     return similarity
