@@ -3,6 +3,7 @@ from nltk.corpus import stopwords as nltk_stopwords
 from textblob import TextBlob
 from textblob import Word
 from nltk.stem import WordNetLemmatizer
+import string
 
 posTb2Wn = {'JJ': 'a', 'JJR': 'a', 'JJS': 'a', 'RB': 'r', 'RBR': 'r', 'RBS': 'r', 'VB': 'v', 'VBD': 'v', 'VBG': 'v',
             'VBN': 'v', 'VBP': 'v', 'VBZ': 'v', 'NN': 'n', 'NNS': 'n', 'NNP': 'n', 'NNPS': 'n', 'n': 'n', 'a': 'a',
@@ -18,6 +19,8 @@ def preprocess(sentence, use_stemmer=False, use_lowercase=False,
 
     words_and_tags_list = [list(x) for x in words_and_tags]
 
+    # This excludes all the words, which contain special characters. Needed due to the residue from blob.tags
+    words_and_tags_list = [[word[0], word[1]] for word in words_and_tags_list if not any(c in string.punctuation for c in word[0])]
 
     if use_stopwords:
         stopwords = list(set(nltk_stopwords.words('english')))
