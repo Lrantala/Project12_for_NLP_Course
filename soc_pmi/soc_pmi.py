@@ -10,6 +10,14 @@ import soc_pmi.wn3 as wn3
 import soc_pmi.wordSim as wordSim
 
 
+# Looping to find Pi
+def delete(matrix, i, j):
+    for row in matrix:
+        del row[j]
+    matrix = [matrix[i1] for i1 in range(len(matrix)) if i1 != i]
+    return matrix
+
+
 def soc_pmi(s1, s2):
 
 
@@ -61,14 +69,6 @@ def soc_pmi(s1, s2):
     for i in range(len(S1_next)):
         for j in range(len(S2_next)):
             Matrix[i][j] = (0.5 * Matrix1[i][j]) + (0.5 * Matrix2[i][j])
-
-
-    # Looping to find Pi
-    def delete(matrix, i, j):
-        for row in matrix:
-            del row[j]
-        matrix = [matrix[i1] for i1 in range(len(matrix)) if i1 != i]
-        return matrix
 
     Pi = []
     while (len(Matrix) > 0 and len(Matrix[i]) > 0):
