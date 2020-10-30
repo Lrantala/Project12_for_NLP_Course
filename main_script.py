@@ -3,6 +3,8 @@ import logging
 import wordnet_implementation.wordnet_implementation as wni
 import similarity_functions.pearson_correlation_stss131 as pcorr
 import custom_similarity_measure.custom_similarity_measure as csm
+from sentence_and_word_processing.sentence_and_word_processing import preprocess
+import soc_pmi.soc_pmi as soc
 from gooey import Gooey
 
 
@@ -17,7 +19,7 @@ def argument_parser():
                         type=str.lower,
                         const="original",
                         nargs="?",
-                        choices=("original", "hypers_and_hypos", "alternative"),
+                        choices=("original", "hyp-ed method", "semantic text similarity method"),
                         help="Select similarity measure to use (default: 'original')")
 
     parser.add_argument("-l", "--lowercase", action="store_true", help="Whether the sentences should be lowercased.")
@@ -42,19 +44,44 @@ if __name__ == "__main__":
     if args.verbose:
         logging.basicConfig(level=logging.INFO)
 
-    if args.measure == "original":
-        logging.info("Calculating path similarity for sentences using original formula.")
-        sentence_similarity_score = wni.calculate_path_similarity_for_sentences(sentence1=args.sentence1, sentence2=args.sentence2,
-                                                stemming=args.stem, lowercase=args.lowercase,
-                                                stopwords=args.stopwords, remove_notalpha=args.nonalpha)
-    elif args.measure == "hypers_and_hypos":
-        logging.info("Calculating path similarity for sentences using hypernyms and hyponyms.")
-        sentence_similarity_score = csm.count_custom_similarity_measure(sentence1=args.sentence1, sentence2=args.sentence2,
-                                                stemming=args.stem, lowercase=args.lowercase,
-                                                stopwords=args.stopwords, remove_notalpha=args.nonalpha)
-    print("Sentence similarities: " + str(sentence_similarity_score))
-
     if args.stss131test:
         pcorr.calculate_pearson_for_sts131(stemming=args.stem, lowercase=args.lowercase,
                                            stopwords=args.stopwords, remove_notalpha=args.nonalpha,
                                            analyze_measure=args.measure)
+
+    elif args.measure == "original":
+        logging.info("Calculating path similarity for sentences using original formula.")
+        sentence_similarity_score = wni.calculate_path_similarity_for_sentences(sentence1=args.sentence1,
+                                                                                sentence2=args.sentence2,
+                                                                                stemming=args.stem,
+                                                                                lowercase=args.lowercase,
+                                                                                stopwords=args.stopwords,
+                                                                                remove_notalpha=args.nonalpha)
+        print("Sentence similarities: " + str(sentence_similarity_score))
+    elif args.measure == "hyp-ed method":
+        logging.info("Calculating path similarity for sentences using hypernyms and hyponyms.")
+        sentence_similarity_score = csm.count_custom_similarity_measure(sentence1=args.sentence1,
+                                                                        sentence2=args.sentence2,
+                                                                        stemming=args.stem, lowercase=args.lowercase,
+                                                                        stopwords=args.stopwords,
+                                                                        remove_notalpha=args.nonalpha)
+        print("Sentence similarities: " + str(sentence_similarity_score))
+    elif args.measure == "semantic text similarity method":
+        logging.info("Calculating path similarity for sentences using SOC PMI Alogrithm.")
+        sentence1_words = preprocess(sentence=args.sentence1, use_stemmer=args.stem, use_lowercase=args.lowercase,
+                                     use_stopwords=args.stopwords, remove_nonalpha=args.nonalpha)
+
+        sentence2_words = preprocess(sentence=args.sentence2, use_stemmer=args.stem, use_lowercase=args.lowercase,
+                                     use_stopwords=args.stopwords, remove_nonalpha=args.nonalpha)
+
+        s1_word_list, s2_word_list = [], []
+
+        for word1 in sentence1_words:
+            s1_word_list.append(word1[0])
+
+        for word2 in sentence2_words:
+            s2_word_list.append(word2[0])
+
+        sentence_similarity_score = soc.soc_pmi(s1_word_list, s2_word_list)
+        print("Sentence similarities: " + str(sentence_similarity_score))
+
