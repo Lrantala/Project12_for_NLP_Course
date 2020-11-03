@@ -24,6 +24,7 @@ It is possible to run the program either from the GUI or from the command line. 
 
 * -s1 / --sentence1
 * -s2 / --sentence2
+* -m / --measure
 * -l / --lowercase
 * -s / --stem
 * -le / --lemma
@@ -37,6 +38,10 @@ First sentence to be processed/analyzed
 
 ### -s2 / --sentence2
 Second sentence to be processed/analyzed
+
+### -m / --measure
+Semantic measure to be used. Possible choices are: "original", "hyp-ed method" or "emantic text similarity method". Default: "original".
+"Original" refers to Wordnet Path Similarity Measure, "hyp-ed method" refers to the Hyponym and Hypernym Semantic Similarity Measure, and "semantic text similarity method" refers to SOC-PMI Semantic Text Similarity Measure.
 
 ### -l / --lowercase
 Boolean flag. If present, the words in sentences are lowercased.
