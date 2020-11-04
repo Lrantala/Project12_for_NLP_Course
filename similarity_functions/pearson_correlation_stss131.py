@@ -15,14 +15,14 @@ def calculate_pearson_for_sts131(stemming, lowercase, stopwords, remove_notalpha
             similarity_score = wni.calculate_path_similarity_for_sentences(sentence1=s1, sentence2=s2,
                                                         stemming=stemming, lowercase=lowercase,
                                                         stopwords=stopwords, remove_notalpha=remove_notalpha)
-            print("Similarity score of the current sentence pair is:", similarity_score)
+            # print("Similarity score of the current sentence pair is:", similarity_score)
 
         elif analyze_measure == "hyp-ed method":
             similarity_score = csm.count_custom_similarity_measure(sentence1=s1, sentence2=s2,
                                                                    stemming=stemming, lowercase=lowercase,
                                                                    stopwords=stopwords,
                                                                    remove_notalpha=remove_notalpha)
-            print("Similarity score of the current sentence pair is:", similarity_score)
+            # print("Similarity score of the current sentence pair is:", similarity_score)
 
         elif analyze_measure == "semantic text similarity method":
             sentence1_words = preprocess(s1, stemming, lowercase, stopwords, remove_notalpha)
@@ -38,7 +38,7 @@ def calculate_pearson_for_sts131(stemming, lowercase, stopwords, remove_notalpha
                 s2_word_list.append(word2[0])
 
             similarity_score = soc.soc_pmi(s1_word_list, s2_word_list)
-            print("Similarity score of the current sentence pair is:", similarity_score)
+            # print("Similarity score of the current sentence pair is:", similarity_score)
 
         list_of_similarity_values.append(similarity_score)
 

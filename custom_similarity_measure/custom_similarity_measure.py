@@ -1,14 +1,11 @@
-import nltk
 import logging
-from nltk.corpus import wordnet
 import wordnet_implementation.wordnet_implementation as wni
+
 
 def custom_similarity_measure(synset1, synset2):
 
     synset1_hyper, synset2_hyper =[], []
-
     synset1_hypo, synset2_hypo = [], []
-
     noun_hyper, verb_hypo = 0, 0
 
 ## Takes care of the hypernyms and hyponyms for the synsets of the sentence pairs
@@ -19,7 +16,6 @@ def custom_similarity_measure(synset1, synset2):
             synset1_hypo.append(syns.hyponyms())
         else:
             logging.info("Encountered a synset which is not a noun or verb")
-            # break
 
     for syns in synset2:
         if syns.pos() == 'n':
@@ -28,23 +24,21 @@ def custom_similarity_measure(synset1, synset2):
             synset2_hypo.append(syns.hyponyms())
         else:
             logging.info("Encountered a synset which is not a noun or verb")
-            # break
 
 ## Takes care of the equation that's inside the bracket, minus the 'max' part
     common_hyper = commonality(synset1_hyper, synset2_hyper)
     total_hyper = hyp_union(synset1_hyper + synset2_hyper)
-    # total_hyper_set = set().union(synset1_hyper + synset2_hyper)
 
     if total_hyper is not 0:
         noun_hyper = common_hyper/total_hyper
 
     common_hypo = commonality(synset1_hypo, synset2_hypo)
     total_hypo = hyp_union(synset1_hypo + synset2_hypo)
-    # total_hypo = len(set().union(synset1_hypo + synset2_hypo))
     if total_hypo is not 0:
         verb_hypo = common_hypo / total_hypo
 
-    return noun_hyper, verb_hypo # to be returned to the function that makes the call for the custom similarity measure
+    return noun_hyper, verb_hypo
+
 
 def commonality(synset1, synset2):
     union_list = []
@@ -54,6 +48,7 @@ def commonality(synset1, synset2):
                    if item1 not in union_list:
                        union_list.append(item1)
     return len(union_list)
+
 
 def hyp_union(hyp_list):
     union_list = []
@@ -66,9 +61,9 @@ def hyp_union(hyp_list):
 def count_custom_similarity_measure(sentence1, sentence2, stemming, lowercase, stopwords, remove_notalpha):
 
     sentence1_words = wni.preprocess(sentence=sentence1, use_stemmer=stemming, use_lowercase=lowercase,
-                                 use_stopwords=stopwords, remove_nonalpha=remove_notalpha)
+                                     use_stopwords=stopwords, remove_nonalpha=remove_notalpha)
     sentence2_words = wni.preprocess(sentence=sentence2, use_stemmer=stemming, use_lowercase=lowercase,
-                                 use_stopwords=stopwords, remove_nonalpha=remove_notalpha)
+                                     use_stopwords=stopwords, remove_nonalpha=remove_notalpha)
 
     sentence_1_synset_list = []
     sentence_2_synset_list = []

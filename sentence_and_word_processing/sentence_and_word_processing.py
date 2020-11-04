@@ -2,7 +2,6 @@ from nltk.stem.snowball import SnowballStemmer
 from nltk.corpus import stopwords as nltk_stopwords
 from textblob import TextBlob
 from textblob import Word
-from nltk.stem import WordNetLemmatizer
 import string
 
 posTb2Wn = {'JJ': 'a', 'JJR': 'a', 'JJS': 'a', 'RB': 'r', 'RBR': 'r', 'RBS': 'r', 'VB': 'v', 'VBD': 'v', 'VBG': 'v',
@@ -11,12 +10,8 @@ posTb2Wn = {'JJ': 'a', 'JJR': 'a', 'JJS': 'a', 'RB': 'r', 'RBR': 'r', 'RBS': 'r'
 
 def preprocess(sentence, use_stemmer=False, use_lowercase=False,
                use_stopwords = False,remove_nonalpha=False, use_lemma = False):
-    # We always tokenize
     blob = TextBlob(sentence)
-
-    # words = blob.words
     words_and_tags = blob.tags
-
     words_and_tags_list = [list(x) for x in words_and_tags]
 
     # This excludes all the words, which contain special characters. Needed due to the residue from blob.tags
@@ -31,21 +26,16 @@ def preprocess(sentence, use_stemmer=False, use_lowercase=False,
     # Therefore, we need to lowercase akk the words, and then look if they appear in stopwords.
     # Note that we still return the unlowered version for the word, if it's not found in stopwords.
     # words = [word for word in words if word.lower() not in stopwords]
-
-    # List comprehension sorting out. Take the first element for each nested list, and check if it's
-    # in the stopwords list. Then root out nested lists, which have only pos remaining.
     words_and_tags_list = [[word for word in wordpos if word.lower() not in stopwords] for wordpos in words_and_tags_list]
 
     words_and_tags_list = [x for x in words_and_tags_list if len(x) > 1]
 
 
     if use_lowercase:
-        # words = [word.lower() for word in words if word.lower() not in stopwords]
         words_and_tags_list = [[word[0].lower(), word[1]] for word in words_and_tags_list]
 
     # Note that this also removes all words, which have a number in them
     if remove_nonalpha:
-        # words = [word for word in words if word.isalpha() and word not in stopwords]
         words_and_tags_list = [[word for word in wordpos if word.isalpha()] for wordpos in words_and_tags_list]
 
         words_and_tags_list = [x for x in words_and_tags_list if len(x) > 1]
@@ -55,7 +45,6 @@ def preprocess(sentence, use_stemmer=False, use_lowercase=False,
     # Stemmer also makes words lowercase by default
     if use_stemmer:
         stemmer = SnowballStemmer("english")
-        # words = [stemmer.stem(word) for word in words]
         words_and_tags_list = [[stemmer.stem(word[0]), word[1]] for word in words_and_tags_list]
 
     if use_lemma:
